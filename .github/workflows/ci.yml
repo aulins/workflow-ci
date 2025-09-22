@@ -22,7 +22,7 @@ jobs:
                   activate-environment: diabetes-env
                   environment-file: MLProject/conda.yaml
 
-            - name: Install MLflow (pastikan ada di PATH)
+            - name: Install MLflow
               run: conda run -n diabetes-env pip install mlflow==2.13.0
 
             - name: Run MLflow Project

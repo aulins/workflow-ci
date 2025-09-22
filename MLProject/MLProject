@@ -1,8 +1,9 @@
-name: diabetes-project
+name: Diabetes Training Project
+
 conda_env: conda.yaml
 
 entry_points:
     main:
+        command: "python modelling.py --data {data_path}"
         parameters:
-            data: { type: str, default: dataset_preprocessing/diabetes_preprocessed.csv }
-        command: "python modelling.py --data {data}"
+            data_path: { type: str, default: "../dataset_preprocessing/diabetes_preprocessed.csv" }
