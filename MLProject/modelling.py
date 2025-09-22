@@ -27,7 +27,7 @@ def train(data_path: Path):
 
     mlflow.sklearn.autolog()
 
-    with mlflow.start_run():
+    with mlflow.start_run(run_name="logreg_baseline"):
         model = LogisticRegression(max_iter=500)
         model.fit(X_train, y_train)
 
@@ -43,7 +43,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data",
         type=str,
-        default=str(Path(__file__).parent / "dataset_preprocessing" / "diabetes_preprocessed.csv"),
+        # dataset ada di luar folder MLProject
+        default=str(Path(__file__).resolve().parent.parent / "dataset_preprocessing" / "diabetes_preprocessed.csv"),
         help="Path ke dataset",
     )
     args = parser.parse_args()
