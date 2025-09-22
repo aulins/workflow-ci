@@ -1,4 +1,4 @@
-name: CI - Train ML Model
+name: CI MLflow Project
 
 on:
     push:
@@ -11,16 +11,16 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repo
+            - name: Checkout code
               uses: actions/checkout@v3
 
-            - name: Set up Python
+            - name: Setup Python
               uses: actions/setup-python@v4
               with:
                   python-version: "3.10"
 
-            - name: Install MLflow
-              run: pip install mlflow
+            - name: Install dependencies
+              run: pip install -r MLProject/requirements.txt
 
             - name: Run MLflow project
-              run: mlflow run MLProject
+              run: mlflow run MLProject --env-manager local
