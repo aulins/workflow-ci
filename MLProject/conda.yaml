@@ -6,9 +6,10 @@ dependencies:
     - python=3.10
     - pip
     - pip:
-          - mlflow
+          - mlflow==2.9.2
           - scikit-learn
           - pandas
           - matplotlib
           - seaborn
           - numpy
+          - importlib-metadata<5.0
