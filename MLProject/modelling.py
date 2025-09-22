@@ -27,13 +27,14 @@ def train(data_path: Path):
 
     mlflow.sklearn.autolog()
 
-    with mlflow.start_run(run_name="logreg_baseline"):
+    with mlflow.start_run():   # TANPA run_name
         model = LogisticRegression(max_iter=500)
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
         mlflow.log_metric("accuracy", acc)
+
 
     print(f"Training selesai ✅ | Akurasi: {acc:.4f}")
 
