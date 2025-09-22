@@ -31,7 +31,7 @@ def train(data_path: Path):
     mlflow.set_experiment("diabetes-basic")
     mlflow.sklearn.autolog(log_model_signatures=True, log_input_examples=False)
 
-    with mlflow.start_run(run_name="logreg_baseline"):
+    with mlflow.start_run(run_name="logreg_baseline", nested=True):
         model = LogisticRegression(max_iter=1000)
         model.fit(X_train, y_train)
 
