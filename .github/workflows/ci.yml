@@ -23,10 +23,8 @@ jobs:
                   environment-file: MLProject/conda.yaml
 
             - name: Run MLflow Project
-              shell: bash -1 {0}
               run: |
-                  conda activate diabetes-env
-                  mlflow run MLProject --env-manager conda
+                  conda run -n diabetes-env mlflow run MLProject --env-manager conda
 
             - name: Upload confusion matrix artifact
               uses: actions/upload-artifact@v4
