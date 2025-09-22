@@ -1,4 +1,3 @@
-# modelling.py
 import argparse
 from pathlib import Path
 
@@ -6,18 +5,18 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 )
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 def train(data_path: Path):
-    # 1) Load data
+    # 1) Load dataset
     df = pd.read_csv(data_path)
     X = df.drop(columns=["Outcome"]).values
     y = df["Outcome"].astype(int).values
@@ -27,14 +26,11 @@ def train(data_path: Path):
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    # 3) Set MLflow lokal (folder mlruns akan dibuat otomatis)
+    # 3) MLflow setup
     mlflow.set_tracking_uri("file:./mlruns")
     mlflow.set_experiment("diabetes-basic")
-
-    # 4) Autolog ON
     mlflow.sklearn.autolog(log_model_signatures=True, log_input_examples=False)
 
-    # 5) Train + log manual untuk metrik utama (agar jelas di UI)
     with mlflow.start_run(run_name="logreg_baseline"):
         model = LogisticRegression(max_iter=1000)
         model.fit(X_train, y_train)
@@ -50,7 +46,7 @@ def train(data_path: Path):
         mlflow.log_metric("recall", rec)
         mlflow.log_metric("f1", f1)
 
-        # 6) Log artefak: confusion matrix
+        # 4) Confusion Matrix
         cm = confusion_matrix(y_test, y_pred)
         fig = plt.figure(figsize=(4, 3))
         sns.heatmap(cm, annot=True, fmt="d", cbar=False)
@@ -61,7 +57,7 @@ def train(data_path: Path):
         fig.savefig(fig_path)
         mlflow.log_artifact(str(fig_path))
 
-    print("Training selesai. Cek folder ./mlruns atau buka MLflow UI.")
+    print("✅ Training selesai. Cek artefak & metrik di ./mlruns atau MLflow UI.")
 
 
 if __name__ == "__main__":
@@ -70,7 +66,9 @@ if __name__ == "__main__":
         "--data",
         type=str,
         default=str(
-            Path(__file__).with_name("../dataset_preprocessing") / "diabetes_preprocessed.csv"
+            Path(__file__).resolve().parent.parent
+            / "dataset_preprocessing"
+            / "diabetes_preprocessed.csv"
         ),
         help="Path ke CSV hasil preprocessing",
     )
