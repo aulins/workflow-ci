@@ -14,12 +14,15 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Setup Python
-              uses: actions/setup-python@v5
+            - name: Setup Miniconda
+              uses: conda-incubator/setup-miniconda@v2
               with:
+                  auto-update-conda: true
                   python-version: "3.10"
+                  activate-environment: diabetes-env
+                  environment-file: MLProject/conda.yaml
 
-            - name: Install dependencies for MLflow CLI
+            - name: Install MLflow (base)
               run: pip install mlflow
 
             - name: Run MLflow Project
