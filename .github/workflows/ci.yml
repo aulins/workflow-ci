@@ -22,9 +22,6 @@ jobs:
                   activate-environment: diabetes-env
                   environment-file: MLProject/conda.yaml
 
-            - name: Install MLflow (base)
-              run: pip install mlflow==2.9.2
-
             - name: Run MLflow Project
               run: mlflow run MLProject --env-manager conda
 
