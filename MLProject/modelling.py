@@ -70,7 +70,7 @@ if __name__ == "__main__":
         "--data",
         type=str,
         default=str(
-            Path(__file__).with_name("dataset_preprocessing") / "diabetes_preprocessed.csv"
+            Path(__file__).with_name("../dataset_preprocessing") / "diabetes_preprocessed.csv"
         ),
         help="Path ke CSV hasil preprocessing",
     )
