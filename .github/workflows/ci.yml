@@ -23,4 +23,4 @@ jobs:
                   environment-file: MLProject/conda.yaml
 
             - name: Run MLflow Project
-              run: mlflow run MLProject --env-manager conda
+              run: conda run -n diabetes-env mlflow run MLProject --env-manager conda
